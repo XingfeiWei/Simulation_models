@@ -1,0 +1,82 @@
+    variable name index CTAB1mM_nvt
+    variable temp   equal  300
+    variable rand1  equal  123456
+    log log.${name}
+
+# ----------------- Init Section -----------------
+
+    units real
+    atom_style full
+    bond_style  harmonic
+    angle_style  harmonic
+    dihedral_style  opls
+    pair_style  hybrid lj/cut/coul/long  10.0 10.0 
+    pair_modify mix arithmetic
+    special_bonds lj/coul 0.0 0.0 0.5
+    kspace_style pppm 0.0001
+    kspace_modify mesh 100 100 100 
+
+# ----------------- Atom Definition Section -----------------
+
+read_data data.MPA1mMNaCl
+#read_restart res.
+# ----------------- Settings Section -----------------
+
+pair_coeff  1   1   lj/cut/coul/long    0.066   3.5 #C3                     
+pair_coeff  2   2   lj/cut/coul/long    0.066   3.5 #C2                     
+pair_coeff  3   3   lj/cut/coul/long    0.17    3.25    #N                      
+pair_coeff  4   4   lj/cut/coul/long    0.09    4.51    #Br-    type    2   outer           
+pair_coeff  5   5   lj/cut/coul/long    0.03    2.5 #H                      
+pair_coeff  6   6   lj/cut/coul/long    0.09    4.51    #Br-    type    1   inner           
+pair_coeff  7   7   lj/cut/coul/long    0.002772    3.35    #oplsaa Na                  
+pair_coeff  8   8   lj/cut/coul/long    0.11779 4.18    #oplsaa Cl                  
+pair_coeff  9   9   lj/cut/coul/long    5.29    2.951   #Au FCC metal 0.039 2.935 #e=1.55 2.629   with 5.29    kcal
+
+pair_coeff  1   9   lj/cut/coul/long    0.050734604 3.2175  #C3 _Au
+pair_coeff  2   9   lj/cut/coul/long    0.050734604 3.2175  #C2 _Au
+pair_coeff  3   9   lj/cut/coul/long    0.081424812 3.0925  #N  _Au
+pair_coeff  4   9   lj/cut/coul/long    0.059245253 3.7225  #Br-    _Au
+pair_coeff  5   9   lj/cut/coul/long    0.034205263 2.7175  #H  _Au
+pair_coeff  6   9   lj/cut/coul/long    2.0 3.7225  #Br- inner  _Au
+pair_coeff  7   9   lj/cut/coul/long    0.0103975   3.1425  #Na _Au
+pair_coeff  8   9   lj/cut/coul/long    0.067777651 3.5575  #Cl _Au
+
+# ----------------- Run Section -----------------
+
+variable vtimpstep equal 1 
+variable Pdamp  equal  ${vtimpstep}*1000
+variable Tdamp  equal  ${vtimpstep}*100
+
+thermo 1000 
+timestep ${vtimpstep}  
+neighbor           2.5 bin
+neigh_modify every 1 delay 0 check yes 
+group aunp type 9
+group ctab type <> 1 6
+group ions type 4 7 8
+
+restart 100000 res.1 res.2
+
+compute c1 aunp com
+thermo_style custom step temp pe epair etotal press c_c1[1] c_c1[2]  c_c1[3] density vol 
+
+dielectric 80
+
+fix FM all  momentum 1 linear 1 1 1
+fix NVE all nve
+fix LAN all langevin 300 300 ${Tdamp}  ${rand1}
+run     100000
+unfix LAN
+unfix NVE
+unfix FM
+
+dump 1 all xyz 100000 ${name}.xyz
+dump_modify 1 element C C N Br H Br Na Cl Au 
+fix NVE all nve
+fix LAN all langevin 300 300 ${Tdamp}  ${rand1}+1
+run     1000000
+unfix LAN
+unfix NVE
+undump 1
+
+write_data data.${name}

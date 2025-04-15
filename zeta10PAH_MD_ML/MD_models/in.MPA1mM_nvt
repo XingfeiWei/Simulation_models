@@ -1,0 +1,106 @@
+    variable name index MPA1mM_nvt
+    variable temp   equal  300
+    variable rand1  equal  123456
+    log log.${name}
+
+# ----------------- Init Section -----------------
+
+    units real
+    atom_style full
+    bond_style hybrid harmonic
+    angle_style hybrid harmonic
+    dihedral_style hybrid opls
+    improper_style hybrid harmonic
+    pair_style hybrid lj/cut/coul/long 10.0 10.0 morse 8.0 
+    pair_modify mix arithmetic
+    special_bonds lj/coul 0.0 0.0 0.5
+    kspace_style pppm 0.0001
+    kspace_modify mesh 100 100 100 
+
+# ----------------- Atom Definition Section -----------------
+
+read_data data.MPA1mMNaCl
+#read_restart res.
+# ----------------- Settings Section -----------------
+
+    pair_coeff 1 1 lj/cut/coul/long 0.0660   3.5000 
+    pair_coeff 2 2 lj/cut/coul/long 0.1050   3.7500
+    pair_coeff 3 3 lj/cut/coul/long 0.25    3.55
+    pair_coeff 4 4 lj/cut/coul/long 0.2100  2.9600
+    pair_coeff 5 5 lj/cut/coul/long 0.002772       3.35
+    pair_coeff 6 6 lj/cut/coul/long 0.0150         2.4200
+    pair_coeff 7 7 lj/cut/coul/long 0.002772    3.35 #oplsaa Na 
+    pair_coeff 8 8 lj/cut/coul/long 0.11779 4.18    #oplsaa Cl 
+    pair_coeff 9 9 lj/cut/coul/long 5.29 2.951 #0.039  2.935 #1.55  2.629 with 5.29  kcal
+
+pair_coeff  1   9   lj/cut/coul/long 0.050734604    3.21750
+pair_coeff  2   9   lj/cut/coul/long 0.063992187    3.34250
+pair_coeff  3   9   morse   8.763   1.47    2.65    8   #Au-S  
+pair_coeff  4   9   lj/cut/coul/long 0.090498619    2.94750
+pair_coeff  5   9   lj/cut/coul/long 0.0103975  3.14250 #oplsaa Na-Au
+pair_coeff  6   9   lj/cut/coul/long 0.024186773    2.67750     
+pair_coeff  7   9   lj/cut/coul/long 0.0103975  3.14250 #oplsaa Na-Au 
+pair_coeff  8   9   lj/cut/coul/long 0.067777651    3.55750 #oplsaa Cl-Au 
+
+    bond_coeff 1 harmonic 268.00     1.5290 
+    bond_coeff 2 harmonic 222.00     1.8100
+    bond_coeff 3 harmonic 340.00     1.0900
+    bond_coeff 4 harmonic 317.00     1.5220
+    bond_coeff 5 harmonic 656.00     1.2500
+
+    angle_coeff 1 harmonic  50.00     108.60
+    angle_coeff 2 harmonic  37.50     110.70
+    angle_coeff 3 harmonic  35.00     109.50
+    angle_coeff 4 harmonic  33.00     107.80
+    angle_coeff 5 harmonic  63.00     111.10
+    angle_coeff 6 harmonic  35.00     109.50
+    angle_coeff 7 harmonic  70.00     117.00
+    angle_coeff 8 harmonic  80.00     126.00
+
+    dihedral_coeff 1 opls -4.344   -1.714 0.0  0.0
+    dihedral_coeff 2 opls 0.0 0.0   0.452 0.0   
+    dihedral_coeff 3 opls 0.0 0.0  -0.100 0.0  
+    dihedral_coeff 4 opls 0.0 0.0   0.300 0.0       
+    dihedral_coeff 5 opls 0.0 0.820   0.0 0.0    
+    dihedral_coeff 6 opls 0.0 0.0       0.0 0    
+
+    improper_coeff 1 harmonic 10.5 180 
+
+# ----------------- Run Section -----------------
+
+variable vtimpstep equal 1 
+variable Pdamp  equal  ${vtimpstep}*1000
+variable Tdamp  equal  ${vtimpstep}*100
+
+restart 100000 res.1 res.2
+
+thermo 1000
+timestep ${vtimpstep}  
+neighbor           2.5 bin
+neigh_modify every 1 delay 0 check yes 
+
+group nacl type 5 7 8 
+group aunp type 9
+compute c1 aunp com
+thermo_style custom step temp pe epair etotal press c_c1[1] c_c1[2]  c_c1[3] density vol 
+
+dielectric 80
+
+fix FM all  momentum 1 linear 1 1 1
+fix NVE all nve
+fix LAN all langevin 300 300 ${Tdamp}  ${rand1}
+run     100000
+unfix LAN
+unfix NVE
+unfix FM
+
+dump 1 all xyz 10000 ${name}-1.xyz
+dump_modify 1 element C C S O Na H Na Cl Au
+fix NVE all nve
+fix LAN all langevin 300 300 ${Tdamp}  ${rand1}+1
+run     1000000
+unfix LAN
+unfix NVE
+undump 1
+
+write_data data.${name}

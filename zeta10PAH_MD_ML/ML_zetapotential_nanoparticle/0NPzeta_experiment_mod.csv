@@ -1,0 +1,12 @@
+NP materials,Core Diameter (nm),salt concentration (M),ligand type*,PAH chains*,Citrate number*,Ligand number*,charge density (e/nm^2),R_H (nm),zeta (mV)
+AuNP,4.8,0.001,PAH,nan,nan,nan,26.5,24.5,72
+AuNP,4.5,0.001,PAH,nan,nan,nan,26.5,19,66
+AuNP,4.7,0.001,PAH,nan,nan,nan,12.8,9.85,38.4
+AuNP,4.2,0.001,MPA,0,nan,nan,-5.6,7.4,-36
+AuNP,4.5,0.001,PAH,nan,nan,nan,4.0,3,38
+AuNP,4.5,0.1,PAH,nan,nan,nan,4.0,25,32
+AuNP,4.2,0.001,MPA,0,nan,nan,-4.0,4.5,-29
+AuNP,4.2,0.1,MPA,0,nan,nan,-4.0,250,-27
+AuNP,4.9,0.001,Citrate,0,nan,nan,-5.4,6.4,-15.3
+AuNP,4.7,0.001,PAH,nan,nan,nan,2.6,8.95,17.9
+AuNP,4.2,0.002,PAH,nan,nan,nan,2.6,6,34
