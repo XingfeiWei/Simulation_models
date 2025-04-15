@@ -1,0 +1,4 @@
+LAMMPS (29 Sep 2021)
+   variable name index NVT_1pahAuNP_1mM_relax1
+    log log.${name}
+    log log.NVT_1pahAuNP_1mM_relax1
