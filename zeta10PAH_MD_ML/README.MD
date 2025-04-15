@@ -1,4 +1,4 @@
-These file in the folder are to support paper:
+These files in the folder are to support paper:
 
 Structure and Zeta Potential of Gold Nanoparticles with Coronas of Varying Size and Composition
 
