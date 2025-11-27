@@ -1,0 +1,454 @@
+variable name index FcQ20E30_switch_share
+    log log.${name}
+    variable Tset equal 200
+variable rand1 equal 2510121
+    variable T1 equal  240
+    variable T2 equal  195
+    variable runtime equal  4000000
+# ----------------- Init Section -----------------
+
+    units real
+    atom_style full
+    bond_style  harmonic
+    angle_style  harmonic
+    dihedral_style hybrid opls fourier 
+    improper_style  harmonic
+    pair_style hybrid lj/cut/coul/cut 10.0 10.0 lj/cut 10.0 morse 8.0 
+    pair_modify mix arithmetic
+    special_bonds lj/coul 0.0 0.0 0.5
+    #kspace_style pppm 0.0001
+
+# ----------------- Atom Definition Section -----------------
+
+read_data   data.FcQ20E30_share
+#read_restart res.
+# ----------------- Settings Section -----------------
+
+pair_coeff  1 1 lj/cut/coul/cut 0.066 3.5
+pair_coeff  2 2 lj/cut/coul/cut 0.03  2.5
+pair_coeff  3 3 lj/cut/coul/cut 0.25  3.55
+pair_coeff  4 4 lj/cut/coul/cut 0.07  3.55
+pair_coeff  5 5 lj/cut/coul/cut 0.03  2.42
+pair_coeff  6 6 lj/cut/coul/cut 0.0 0.0
+pair_coeff  7 7 lj/cut/coul/cut 0.481836  3.11  
+pair_coeff  8 8 lj/cut 5.29  2.951    #AuNP
+
+pair_coeff  1 2 lj/cut/coul/cut 0.044497191 3
+pair_coeff  1 3 lj/cut/coul/cut 0.128452326 3.525
+pair_coeff  2 3 lj/cut/coul/cut 0.08660254  3.025
+pair_coeff  1 4 lj/cut/coul/cut 0.067970582 3.525
+pair_coeff  2 4 lj/cut/coul/cut 0.045825757 3.025
+pair_coeff  3 4 lj/cut/coul/cut 0.132287566 3.55
+pair_coeff  1 5 lj/cut/coul/cut 0.044497191 2.96
+pair_coeff  2 5 lj/cut/coul/cut 0.03  2.46
+pair_coeff  3 5 lj/cut/coul/cut 0.08660254  2.985
+pair_coeff  4 5 lj/cut/coul/cut 0.045825757 2.985
+pair_coeff  1 6 lj/cut/coul/cut 0 1.75
+pair_coeff  2 6 lj/cut/coul/cut 0 1.25
+pair_coeff  3 6 lj/cut/coul/cut 0 1.775
+pair_coeff  4 6 lj/cut/coul/cut 0 1.775
+pair_coeff  5 6 lj/cut/coul/cut 0 1.21
+pair_coeff  1 7 lj/cut/coul/cut 0.178328842 3.305
+pair_coeff  2 7 lj/cut/coul/cut 0.120229281 2.805
+pair_coeff  3 7 lj/cut/coul/cut 0.347072039 3.33
+pair_coeff  4 7 lj/cut/coul/cut 0.18365326  3.33
+pair_coeff  5 7 lj/cut/coul/cut 0.120229281 2.765
+pair_coeff  6 7 lj/cut/coul/cut 0 1.555
+pair_coeff  1 8 lj/cut/coul/cut 0.050734604 3.2175
+pair_coeff  2 8 lj/cut/coul/cut 0.034205263 2.7175
+pair_coeff  3 8 morse 8.763 1.47 2.65 8    #Au-S
+#pair_coeff  3 8 lj/cut/coul/cut 0.098742088 3.2425  #Au-S
+pair_coeff  4 8 lj/cut/coul/cut 0.052249402 3.2425  #1.0 3.2425 #Cp-Au 
+pair_coeff  5 8 lj/cut/coul/cut 0.034205263 2.6775
+pair_coeff  6 8 lj/cut/coul/cut 0 1.4675
+pair_coeff  7 8 lj/cut/coul/cut 0.137082472 3.0225
+
+dihedral_coeff  1 opls  1.3 -0.05 0.2 0                   
+dihedral_coeff  2 opls  0 0 0.3 0                   
+dihedral_coeff  3 opls  1.262 -0.198  0.465 0                   
+dihedral_coeff  4 opls  0 0 0.3 0                   
+dihedral_coeff  5 opls  0 0 0.452 0                   
+dihedral_coeff  6 opls  -1.697  -0.456  0.585 0                   
+dihedral_coeff  7 opls  0 0 0.462 0                   
+dihedral_coeff  8 opls  0 0 0 0                   
+dihedral_coeff  9 opls  0 0 0 0                   
+dihedral_coeff  10  opls  0 7.25  0 0                   
+dihedral_coeff  11  opls  0 7.25  0 0                   
+dihedral_coeff  12  opls  0 7.25  0 0                   
+dihedral_coeff  13  opls  0 7.25  0 0                   
+dihedral_coeff  14  opls  0 7.25  0 0                   
+dihedral_coeff  15  fourier 1 0.0344 5 -180   ## #CA-cpc-cpc-CA 25 dihedrals Fourier type K=0.0344, d=-180, n=5
+#dihedral_coeff  16  opls 2.0  4.45 2.20 0.70  #Au-S-C-C 
+#dihedral_coeff  17  opls 0.20 0.10 0.20 0.10  #Au-S-C-H
+
+# ----------------- Run Section -----------------
+group aunp1 molecule 4 
+group aunp2 molecule 5 
+group sam subtract all aunp1 aunp2
+group aunp1f id 190 191 192 233 498 196 234 500 237 502 197 199 542 99  480 229 494 97  478 92  185 235 499 236 501 198 200
+group aunp1c id 2113  2114  1913  2099  1914  2100  1932  2205  1933  2206  1873  1874  1931  2204  1872  1903  2089  1905  2090  1864  1865  2112  1912  2098  1904  2091  1863
+group aunp2c id 2307  2308  2309  2350  2615  2313  2351  2617  2354  2619  2314  2316  2659  2216  2597  2346  2611  2214  2595  2209  2302  2352  2616  2353  2618  2315  2317
+group aunp2f id 4230  4231  4030  4216  4031  4217  4049  4322  4050  4323  3990  3991  4048  4321  3989  4020  4206  4022  4207  3981  3982  4229  4029  4215  4021  4208  3980
+group fixNP subtract all aunp1f aunp2f
+group NP1 subtract aunp1 aunp1f 
+group NP2 subtract aunp2 aunp2f 
+
+region rNP1h block -47.0 -28.7 INF INF INF INF
+region rNP2h block  49.6  68.3 INF INF INF INF
+group NP1h region rNP1h
+group NP2h region rNP2h
+
+group shell1 id 143 2167  2137  1198  2208  474 801 1197  777 868 1153  184 1228  802 1233  2033  2141  2115  1914  342 2132  2185  486 1989  141 771 178 2117  1935  182 1874  1531  1202  164 186 767 113 163 755 2127  637 1527  673 1798  2162  1075  1543  2028  287 93  799 722 1667  1537  1741  2121  276 181 340 211 863 1149  2171  461 1916  808 189 148 2134  491 1802  1530  2188  632 1992  1223  2193  1547  387 2120  92  2104  874 1331  1248  185 2206  2205  2189  2200  762 165 1192  97  109 1295  478 490 768 275 1933  1430  1915  1156  172 473 105 229 494 769 477 1928  119 1921  540 1513  1532  580 1947  1748  2116  1661  449 1612  1932  1546  96  674 1873  2123  492 166 2190  110 1480  1872  1550  1548  926 1801  1917  1540  2204  489 1931  448 1511  723 1613  99  480 485 180 757 2135  174 542 574 675 2169  1662  1227  1803  2113  1986  1799  179 272 1231  1670  397 800 147 539 927 1956  1526  1245  635 1478  725 2130  2065  111 227 752 142 455 778 1293  1545  2184  2067  162 225 471 2126  1152  1614  1959  447 1987  1941  1938  1204  1428  753 1881  453 395 108 1610  760 200 1924  198 2165  1913  2099  1560  2101  875 236 1745  501 1929  235 472 1963  2102  729 499 104 1879  2142  1611  2197  274 536 2114  2202  1559  670 1958  764 120 579 1077  2100  1749  631 2186  1199  1328  1222  2119  682 1920  2139  118 2168  774 2194  1539  2163  476 224 796 533 1960  140 173 1743  94  772 475 392 1797  1148  386 869 343 1882  1877  1937  160 144 137 1147  718 1229  1740  1556  2089  576 103 758 1953  537 795 727 871 1246  1668  439 1555  1224  2196  1565  1479  2138  451 1665  1927  1656  1620  1429  1903  2201  199 469 197 2118  1291  444 237 628 502 1528  2161  1072  1542  1810  1249  404 234 2068  500 1200  95  271 484 1607  1981  391 1923  176 1535  1809  803 1878  169 188 467 396 2090  440 1073  923 2124  754 728 1600  748 2062  277 1905  1599  344 1554  187 1510  388 1955  268 1747  1940  114 2064  1962  221 273 538 2098  2180  2112  226 1865  196 443 445 867 450 1236  1239  233 498 1864  1390  2103  157 1988  154 1485  208 1954  1194  1519  1523  454 2150  2158  1213  2151  158 390 2111  1241  1290  2181  2156  2174  152 1948  341 1424  350 1516  792 1950  2035  1606  2107  786 1384  228 865 1876  2060  1608  2037  468 787 129 1067  219 385 1337  2177  384 1912  1243  220 2106  1391  1217  1551  217 192 1220  191 1211  2110  1017  1255  2031  2063  190 1508  2030  1522  936 2061  1195  135 459 210 1289  134 216 466 432 813 1552  1936  2091  1594  1944  1019  1996  1483  1952  1070  1805  128 465 793 462 937 288 1011  349 1160  1254  1388  1157  338 1993  814 1012  578 1425  285 1509  1334  776 1796  1904  1742  1477  145 159 873 483 1074  153 633 671 1536  1863  2129  106 2131  634
+group shell2 id 2888  2393  2459  2918  4232  4234  4325  3270  2985  3314  4254  3350  2919  2260  2210  2230  3319  4284  2303  4052  2591  4150  3644  2872  4050  3192  3043  3915  2894  3315  3919  3991  4317  2980  3448  2754  2916  3266  3345  3340  2925  4288  2790  3865  3665  4106  2885  4221  2884  2404  4233  2594  2213  3547  4049  2590  3664  3660  2265  4238  2879  2226  4045  2611  4244  2392  2282  2222  3729  4033  4279  3730  2457  2504  3920  2791  2346  3597  2595  3667  2608  2301  2302  3778  3273  2657  3630  3784  2749  4064  4302  2603  2566  3990  3647  2289  2328  3858  2280  3309  2697  4038  2607  3365  4032  4145  3648  2299  2298  2578  4251  4258  4237  3779  4109  4306  2281  3412  4305  2214  2258  2306  4322  4048  2228  2792  2886  2991  2597  4249  2874  2209  4323  3663  2295  4310  2227  2283  2691  2659  3989  4252  2236  2216  3918  4307  2839  4240  3654  3344  3649  2606  3731  4034  2389  2609  3194  2881  4184  4030  4282  2512  4031  2752  4046  4321  2840  2748  2653  2297  2895  2842  2352  2570  2564  2696  2279  3643  3269  4218  3787  4219  2221  3628  3916  3545  2656  4301  3727  4073  3044  2917  4182  2992  4058  4055  4076  2391  2846  2514  2616  2602  3348  2588  3677  2618  4319  4231  4243  3662  2565  3595  3321  3996  4075  2869  2315  3862  2225  2291  3866  4247  3728  3998  2589  3676  2237  4104  4230  4217  3445  2344  2264  4259  2572  4041  2870  2877  4216  2259  3410  2787  4286  3657  2342  4103  4314  3362  2296  2353  4080  2317  3189  3717  3546  3860  3363  3317  2388  2875  2343  2385  3682  2235  2619  4022  2889  2568  2257  2503  3673  3596  3346  2986  2745  4044  4280  3927  3982  4285  2912  3926  2593  2461  4311  4256  4020  3773  3264  2799  3366  2354  2650  2844  3724  3265  4185  2460  4179  3339  4255  2601  3408  3981  3341  2314  4236  2891  2913  3645  2293  2592  4235  2865  2277  2509  2693  2835  4054  2305  4077  3040  3659  3190  2231  2617  3316  4040  2261  4241  3782  3716  2557  3914  2341  2394  3994  3737  4318  4098  3652  4206  2212  4037  3999  2316  4207  2220  3857  2584  2304  2920  2845  2513  2561  4303  2988  3627  3725  2521  2615  3672  2286  4278  2290  2556  3785  3864  4029  2351  2654  4079  2571  4070  2254  3372  3656  2390  4313  2338  2350  2211  3334  2984  3337  4057  2655  4181  4220  4229  3995  4215  3626  2586  2871  2313  2562  3054  2502  2909  2336  2567  3129  3371  3136  2466  3671  3187  2930  4105  3184  3328  2508  4072  2327  3407  3602  2982  3639  3542  3277  2582  3625  2910  3356  2402  3311  3711  3505  3507  2505  4275  3134  4021  4223  2345  2245  3922  4224  3406  4061  3330  3360  3508  2275  3723  3980  3640  2333  2931  3541  2337  2458  2501  3668  2904  4071  2560  4297  3451  4298  4067  3993  2583  4294  4273  4208  3358  3636  2271  2455  3128  4291  4228  4147  2903  3669  3642  3312  4180  2325  4069  2405  3274  4178  4267  2246  4152  2274  4227  3053  3501  4065  2549  2579  4113  3633  2334  2307  3454  4053  2576  3658  2251  2467  4268  3045  3600  2585  2308  4148  4177  4110  3594  2269  4154  2507  3353  2882  3342  2252  2750  2309  3544  2914  2893  3913  3409  2751  3446  4261  4281  2600  4043
+
+dump 1 all xyz 400000 ${name}.xyz
+dump_modify 1 element C H S C H He Fe Au
+
+#write_data data.FcQ30E30_200KF
+
+group polymer subtract all aunp1 aunp2
+
+restart 400000 res.1f res.2f
+
+compute c4 polymer gyration
+variable Rg equal c_c4
+
+compute c1 aunp1 com
+compute c2 aunp2 com
+
+variable vtimpstep equal 0.25
+variable Pdamp  equal  ${vtimpstep}*1000
+variable Tdamp  equal  ${vtimpstep}*100
+timestep ${vtimpstep}  
+neighbor           2.5 bin
+neigh_modify every 1 delay 0 check yes 
+
+thermo 1000
+
+#group acetylene id 60 62 64 65
+#fix rig1 acetylene rigid single
+#group polymerX subtract polymer acetylene
+#fix fE all efield  0.0001 0.0 0.0
+
+compute ket1 aunp1c ke/atom
+variable tempt1 atom c_ket1/0.00297881
+compute tempt1 aunp1c reduce ave v_tempt1
+variable tempt1v equal c_tempt1
+
+compute ket2 aunp2c ke/atom
+variable tempt2 atom c_ket2/0.00297881
+compute tempt2 aunp2c reduce ave v_tempt2
+variable tempt2v equal c_tempt2
+
+compute pe12 polymer group/group aunp1
+compute pe23 polymer group/group aunp2
+
+## ON state ##
+set group shell1 charge  0.131424
+set group shell2 charge -0.135169
+set type 4 charge  0
+set type 5 charge 0.105263
+set type 7 charge 0.105263
+##############
+
+fix NVE1 fixNP nve
+
+fix fix1 NP1 langevin ${T1} ${T1} ${Tdamp} ${rand1}+1 tally yes
+fix fix2 NP2 langevin ${T2} ${T2} ${Tdamp} ${rand1}+2 tally yes
+
+compute ke1 polymer ke/atom
+compute t1 polymer temp
+compute pe1 polymer pe/atom
+compute st1 polymer stress/atom t1
+compute flux1 polymer heat/flux ke1 pe1 st1
+variable Jz1 equal c_flux1[1]/vol
+
+compute stk1 polymer stress/atom t1 ke
+compute stp1 polymer stress/atom t1 pair
+compute stb1 polymer stress/atom t1 bond
+compute sta1 polymer stress/atom t1 angle
+compute std1 polymer stress/atom t1 dihedral
+compute fluxk1 polymer heat/flux ke1 pe1 stk1
+compute fluxp1 polymer heat/flux ke1 pe1 stp1
+compute fluxb1 polymer heat/flux ke1 pe1 stb1
+compute fluxa1 polymer heat/flux ke1 pe1 sta1
+compute fluxd1 polymer heat/flux ke1 pe1 std1
+variable Jzk1 equal c_fluxk1[1]/vol
+variable Jzp1 equal c_fluxp1[1]/vol
+variable Jzb1 equal c_fluxb1[1]/vol
+variable Jza1 equal c_fluxa1[1]/vol
+variable Jzd1 equal c_fluxd1[1]/vol
+
+compute sti1 polymer stress/atom t1 improper
+compute stks1 polymer stress/atom t1 kspace
+compute fluxi1 polymer heat/flux ke1 pe1 sti1
+compute fluxks1 polymer heat/flux ke1 pe1 stks1
+variable Jzi1 equal c_fluxi1[1]/vol
+variable Jzks1 equal c_fluxks1[1]/vol
+
+compute kea all ke
+compute pea all pe
+fix fixke fixNP ave/time 1 10000 10000 c_kea c_pea file keall${name}.data mode scalar
+fix fixflux1 fixNP ave/time 1 10000 10000 v_tempt1v v_tempt2v f_fix1 f_fix2  v_Jz1 v_Jzk1 v_Jzp1 v_Jzb1 v_Jza1 v_Jzd1 v_Jzi1 v_Jzks1 file ${name}_flux.txt mode scalar
+
+log ${name}_heat.log
+thermo 10000
+thermo_style custom step temp epair pe etotal c_c1[1] c_c1[2]  c_c1[3] c_c2[1] c_c2[2]  c_c2[3] v_Rg c_pe12 c_pe23
+thermo_modify flush yes
+
+run ${runtime}
+
+## OFF state ##
+set group shell1 charge  0
+set group shell2 charge  0
+set type 4 charge -0.1
+set type 5 charge  0.11764706
+set type 7 charge  0.1
+
+run ${runtime}
+
+##############
+## ON state ##
+set group shell1 charge  0.131424
+set group shell2 charge -0.135169
+set type 4 charge  0
+set type 5 charge 0.105263
+set type 7 charge 0.105263
+
+run ${runtime}
+
+##############
+
+## OFF state ##
+set group shell1 charge  0
+set group shell2 charge  0
+set type 4 charge -0.1
+set type 5 charge  0.11764706
+set type 7 charge  0.1
+
+run ${runtime}
+
+##############
+## ON state ##
+set group shell1 charge  0.131424
+set group shell2 charge -0.135169
+set type 4 charge  0
+set type 5 charge 0.105263
+set type 7 charge 0.105263
+
+run ${runtime}
+
+##############
+
+## OFF state ##
+set group shell1 charge  0
+set group shell2 charge  0
+set type 4 charge -0.1
+set type 5 charge  0.11764706
+set type 7 charge  0.1
+
+run ${runtime}
+
+##############
+## ON state ##
+set group shell1 charge  0.131424
+set group shell2 charge -0.135169
+set type 4 charge  0
+set type 5 charge 0.105263
+set type 7 charge 0.105263
+
+run ${runtime}
+
+##############
+
+## OFF state ##
+set group shell1 charge  0
+set group shell2 charge  0
+set type 4 charge -0.1
+set type 5 charge  0.11764706
+set type 7 charge  0.1
+
+run ${runtime}
+
+##############
+## ON state ##
+set group shell1 charge  0.131424
+set group shell2 charge -0.135169
+set type 4 charge  0
+set type 5 charge 0.105263
+set type 7 charge 0.105263
+
+run ${runtime}
+
+##############
+
+## OFF state ##
+set group shell1 charge  0
+set group shell2 charge  0
+set type 4 charge -0.1
+set type 5 charge  0.11764706
+set type 7 charge  0.1
+
+run ${runtime}
+
+##############
+## ON state ##
+set group shell1 charge  0.131424
+set group shell2 charge -0.135169
+set type 4 charge  0
+set type 5 charge 0.105263
+set type 7 charge 0.105263
+
+run ${runtime}
+
+##############
+
+## OFF state ##
+set group shell1 charge  0
+set group shell2 charge  0
+set type 4 charge -0.1
+set type 5 charge  0.11764706
+set type 7 charge  0.1
+
+run ${runtime}
+
+##############
+## ON state ##
+set group shell1 charge  0.131424
+set group shell2 charge -0.135169
+set type 4 charge  0
+set type 5 charge 0.105263
+set type 7 charge 0.105263
+
+run ${runtime}
+
+##############
+
+## OFF state ##
+set group shell1 charge  0
+set group shell2 charge  0
+set type 4 charge -0.1
+set type 5 charge  0.11764706
+set type 7 charge  0.1
+
+run ${runtime}
+
+##############
+## ON state ##
+set group shell1 charge  0.131424
+set group shell2 charge -0.135169
+set type 4 charge  0
+set type 5 charge 0.105263
+set type 7 charge 0.105263
+
+run ${runtime}
+
+##############
+
+## OFF state ##
+set group shell1 charge  0
+set group shell2 charge  0
+set type 4 charge -0.1
+set type 5 charge  0.11764706
+set type 7 charge  0.1
+
+run ${runtime}
+
+##############
+## ON state ##
+set group shell1 charge  0.131424
+set group shell2 charge -0.135169
+set type 4 charge  0
+set type 5 charge 0.105263
+set type 7 charge 0.105263
+
+run ${runtime}
+
+##############
+
+## OFF state ##
+set group shell1 charge  0
+set group shell2 charge  0
+set type 4 charge -0.1
+set type 5 charge  0.11764706
+set type 7 charge  0.1
+
+run ${runtime}
+
+##############
+## ON state ##
+set group shell1 charge  0.131424
+set group shell2 charge -0.135169
+set type 4 charge  0
+set type 5 charge 0.105263
+set type 7 charge 0.105263
+
+run ${runtime}
+
+##############
+
+## OFF state ##
+set group shell1 charge  0
+set group shell2 charge  0
+set type 4 charge -0.1
+set type 5 charge  0.11764706
+set type 7 charge  0.1
+
+run ${runtime}
+
+##############
+## ON state ##
+set group shell1 charge  0.131424
+set group shell2 charge -0.135169
+set type 4 charge  0
+set type 5 charge 0.105263
+set type 7 charge 0.105263
+
+run ${runtime}
+
+##############
+
+## OFF state ##
+set group shell1 charge  0
+set group shell2 charge  0
+set type 4 charge -0.1
+set type 5 charge  0.11764706
+set type 7 charge  0.1
+
+run ${runtime}
+
+##############
+## ON state ##
+set group shell1 charge  0.131424
+set group shell2 charge -0.135169
+set type 4 charge  0
+set type 5 charge 0.105263
+set type 7 charge 0.105263
+
+run ${runtime}
+
+##############
+
+## OFF state ##
+set group shell1 charge  0
+set group shell2 charge  0
+set type 4 charge -0.1
+set type 5 charge  0.11764706
+set type 7 charge  0.1
+
+run ${runtime}
+
+##############
+## ON state ##
+set group shell1 charge  0.131424
+set group shell2 charge -0.135169
+set type 4 charge  0
+set type 5 charge 0.105263
+set type 7 charge 0.105263
+
+run ${runtime}
+
+##############
+unfix NVE1
+write_data data.${name}
+
