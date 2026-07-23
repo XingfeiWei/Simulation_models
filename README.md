@@ -29,3 +29,8 @@ Example 6: Ligand islands on nanoparticles all-atom simulations
 <p align="center">
   <img src="https://github.com/user-attachments/assets/a40bad60-83d5-4980-b211-84e765a4da0c" alt="Figure8" width="850">
 </p>
+
+Example 7: Vesicle all-atom simulation
+<p align="center">
+  <img width="1200" height="1200" alt="AllAtom12nm_w" src="https://github.com/user-attachments/assets/74079bac-5413-48e2-88cb-7d0ceaf49ae1" />
+</p>
