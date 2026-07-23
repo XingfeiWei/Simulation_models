@@ -20,7 +20,7 @@ MARTINI Diameter 60 nm hide water
 <p align="center">
 <img width="500" height="500" alt="MARTINI60nm" src="https://github.com/user-attachments/assets/cd478581-b6e5-4ba0-84e4-39005f127ebd" />
 </p>
-MARTINI Diameter 60 nm
+MARTINI Diameter 60 nm show water
 <p align="center">
 <img width="500" height="500" alt="MARTINI60nm_w" src="https://github.com/user-attachments/assets/64f8a965-fc70-41dd-8982-edfbc5fc14b9" />
 </p>
