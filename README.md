@@ -34,3 +34,8 @@ Example 7: Vesicle 12 nm in diameter all-atom simulation
 <p align="center">
   <img width="300" height="300" alt="AllAtom12nm_w" src="https://github.com/user-attachments/assets/74079bac-5413-48e2-88cb-7d0ceaf49ae1" />
 </p>
+
+Example 8: Polymer nanoparticle interact with protein
+<p align="center">
+  <img width="300" height="300" alt="pH1_system1_face1_pull14e_60ns" src="https://github.com/user-attachments/assets/0e09e3b2-e110-41bd-9f86-5061d6f76898" />
+</p>
